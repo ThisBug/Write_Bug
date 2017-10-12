@@ -1,0 +1,96 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:83:"D:\Program Files\HaoWeb\Write_Bug\public/../application/index\view\index\index.html";i:1507800099;}*/ ?>
+<?php
+error_reporting(E_ALL & ~E_NOTICE);
+//session_start(); //开启session
+require_once("/codepay/codepay_config.php"); //导入配置文件
+require_once("/codepay/lib/codepay_core.function.php"); //导入所需函数库
+require_once("/codepay/lib/codepay_md5.function.php"); //导入MD5函数库
+?>
+<!DOCTYPE html>
+<html>
+
+<!-- Head -->
+<head>
+
+	<title>支付页面</title>
+
+	<!-- Meta-Tags -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="/index/index/js/jquery-1.8.3.min.js"></script>
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- //Meta-Tags -->
+
+	<!-- Style --> <link rel="stylesheet" href="/index/index/css/style.css" type="text/css" media="all">
+
+
+
+</head>
+<!-- //Head -->
+
+<!-- Body -->
+<body>
+
+	<h1>幸运吃鸡支付页面</h1>
+
+	<div class="container w3layouts agileits">
+		<p style="color: cornflowerblue"><span style="color: red">购买须知</span><br/>
+			提取卡密后请尽快激活使用或保存好<br>
+			付款后按提示点击确定跳转到提取页面，不可提前关闭窗口！否则无法提取到卡密！<br/>
+			卡密是一次性展示的,请妥善保管.
+		</p>
+		<div class="login w3layouts agileits">
+			<form action="Index/index/from" method="post">
+				<div><span class="shop-name">商品名称  :</span><input type="text" Name="shop_name" required="" readonly value="<?php echo $shop_name; ?>"/></div>
+				<div><span class="shop-name">商品价格  :</span><input type="text" Name="money" required="" readonly value="<?php echo $money; ?>元人民币"/></div>
+				<div><span class="shop-name">已售出  :</span><input type="text" Name="num" required="" readonly value="<?php echo $num; ?>件"/></div>
+				<div><span class="shop-name">联系方式  :</span><input type="text" Name="mobile" id="mobile" required="" placeholder="手机或QQ号" value=""/></div>
+				<div><span class="shop-name">支付方式  :</span>
+					<div class="social-icons w3layouts agileits">
+						<ul style="padding-bottom: 1rem;">
+							<li class="zhifubao w3ls" id="zhifubao"><a href="#">
+								<input type="radio" id="zhifubao_checked" name="pay" checked value="1"><span class="icons w3layouts"></span>
+								<span class="text w3layouts agileits"></span></a>
+							</li>
+							<li class="weixin w3ls" id="weixin"><a href="#">
+								<input type="radio" id="weixin_checked" name="pay" value="3"><span class="icons w3layouts"></span>
+								<span class="text w3layouts agileits"></span></a>
+							</li>
+							<div class="clear"> </div>
+						</ul>
+					</div>
+				</div>
+			<div class="send-button w3layouts agileits">
+					<input type="submit" id="zhifu" value="支 付">
+					<input type="hidden" name="token" value="<?php echo $token; ?>">
+			</div>
+			</form>
+			<div class="clear"></div>
+
+	</div>
+
+	<div class="footer w3layouts agileits">
+		<p>Copyright &copy; More Templates - Collect from </p>
+	</div>
+
+</body>
+<!-- //Body -->
+	<script type="text/javascript">
+        $("#zhifu").click(function () {
+			if($("#mobile").val() == "")
+			{
+                alert("请填写联系方式,否则无法发货!");
+                return false;
+			}
+        })
+		$("#zhifubao").click(function () {
+            $("#weixin_checked").attr("checked",false);
+            $("#zhifubao_checked").attr("checked",true);
+        })
+        $("#weixin").click(function () {
+            $("#weixin_checked").attr("checked",true);
+            $("#zhifubao_checked").attr("checked",false);
+        })
+
+	</script>
+</html>

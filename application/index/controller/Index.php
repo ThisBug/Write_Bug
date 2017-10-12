@@ -1,10 +1,117 @@
 <?php
 namespace app\index\controller;
-
-class Index
+use think\Controller;
+session_start();
+class Index extends Controller
 {
     public function index()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> ThinkPHP V5<br/><span style="font-size:30px">十年磨一剑 - 为API开发设计的高性能框架</span></p><span style="font-size:22px;">[ V5.0 版本由 <a href="http://www.qiniu.com" target="qiniu">七牛云</a> 独家赞助发布 ]</span></div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_bd568ce7058a1091"></thinkad>';
+        session('count',session('count')+1);
+        session('token',md5(substr(time(),8,16).'chiji'));
+        if(session('count')>10)
+        {
+            session('count',0);
+            throw new \think\exception\HttpException(403, '操作太频繁');
+        }
+        $db_order = model('Index');
+        $num = $db_order->count('id');
+        $this->assign('token',session('token'));
+        $this->assign('shop_name','幸运吃鸡辅助季卡(3个月有效期)');
+        $this->assign('money',88);
+        $this->assign('num',$num+1500);
+        return $this->fetch();
+    }
+
+    /**
+     * 接收数据创建订单
+     * 返回支付页面
+     * @return bool
+     */
+    public function from()
+    {
+        /*对比token*/
+        if($_POST['token'] <> session('token'))
+        {
+            exit("<script>alert('页面失效,请刷新重试!');history.back(-1);</script>");
+        }
+        $db_order = model('Index');
+        $db_order->shop_name = $_POST['shop_name'];
+        $db_order->money = floatval($_POST['money']);
+        $db_order->num = intval($_POST['num']);
+        $db_order->mobile = $_POST['mobile'];
+        $db_order->pay = intval($_POST['pay']);
+        $db_order->save();
+        $post = [
+            'user' => $db_order->id,
+            'price'=> 88,
+            'remarks' => $_POST['mobile'],
+            'type' => intval($_POST['pay']),
+        ];
+        $judge = $this->vcurl($_SERVER['HTTP_REFERER'].'codepay/codepay.php',$post);
+        /*成功添加数据后消除token*/
+        session('token',null);
+        /*更新数据库成功信息*/
+        if(strlen($judge)>1000)
+        {
+            $db_order->status = 1;
+            $db_order->save();
+            return $judge;
+        }else{
+            exit("<script>alert('页面失效,请刷新重试!');history.back(-1);</script>");
+        }
+    }
+
+    /**
+     * 远程请求函数
+     * @param string $url    请求网址
+     * @param string $post   post参数
+     * @param string $cookie
+     * @param string $cookiejar
+     * @param string $referer
+     * @return bool
+     */
+    public function vcurl($url, $post = '', $cookie = '', $cookiejar = '', $referer = '',$json='') {
+        $tmpInfo = '';
+        $cookiepath = getcwd() . './' . $cookiejar;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        if($json)
+        {
+            $headers = array("Content-type: application/json;charset=UTF-8","Accept: application/json","Cache-Control: no-cache", "Pragma: no-cache",);
+            curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
+        }
+        if ( is_array($post) && isset($post['HTTP_USER_AGENT']))
+        {
+            curl_setopt($curl, CURLOPT_USERAGENT, $post['HTTP_USER_AGENT']);
+            unset($post['HTTP_USER_AGENT']);
+        } else {
+            curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        }
+        if ($referer) {
+            curl_setopt($curl, CURLOPT_REFERER, $referer);
+        } else {
+            curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
+        }
+        if ($post) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+        }
+        if ($cookie) {
+            curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+        }
+        if ($cookiejar) {
+            curl_setopt($curl, CURLOPT_COOKIEJAR, $cookiepath);
+            curl_setopt($curl, CURLOPT_COOKIEFILE, $cookiepath);
+        }
+        //curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $tmpInfo = curl_exec($curl);
+        /* if (curl_errno ( $curl )) {
+         echo '<pre><b>错误:</b><br />' . curl_error ( $curl );
+        } */
+        curl_close($curl);
+        return $tmpInfo;
     }
 }
