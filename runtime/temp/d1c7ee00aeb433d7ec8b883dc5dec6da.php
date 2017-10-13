@@ -1,10 +1,9 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:83:"D:\Program Files\HaoWeb\Write_Bug\public/../application/index\view\index\index.html";i:1507800099;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:83:"D:\Program Files\HaoWeb\Write_Bug\public/../application/index\view\index\index.html";i:1507866866;}*/ ?>
 <?php
 error_reporting(E_ALL & ~E_NOTICE);
-//session_start(); //开启session
-require_once("/codepay/codepay_config.php"); //导入配置文件
-require_once("/codepay/lib/codepay_core.function.php"); //导入所需函数库
-require_once("/codepay/lib/codepay_md5.function.php"); //导入MD5函数库
+require_once("./codepay/codepay_config.php"); //导入配置文件
+require_once("./codepay/lib/codepay_core.function.php"); //导入所需函数库
+require_once("./codepay/lib/codepay_md5.function.php"); //导入MD5函数库
 ?>
 <!DOCTYPE html>
 <html>
