@@ -66,7 +66,6 @@ class Index extends Controller
      */
     public function callback()
     {
-        trace(json_encode($_REQUEST),'info');
         $file = realpath( '/home/wwwlogs/' ).'/apilogs/other/'.date('Y-m-d').'.log';
         if (!is_dir(dirname($file))) {
             mkdir(dirname($file),0777, true);

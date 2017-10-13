@@ -306,6 +306,24 @@ if ($verify_result) { //验证成功
         <?php echo($error_msg ? "以下错误信息关闭调试模式可隐藏：<div class='error text-left'>{$error_msg}</div>" : ''); ?>
         <div class="detail detail-open" id="orderDetail" style="display: block;">
             <dl class="detail-ct" id="desc">
+                <dt style="color: red;font-size: 1rem;">激活码</dt>
+                <dd><?php if($result == '充值成功'){echo ['zqIlRUS6Wgj1ntHNCw1w',
+                        'BcZHFTNEVnCn9q4YQqVQ',
+                        '3qe5OOYkR1815Fr7Rnyd',
+                        '2kSd3GqVGlbltB27fRgL',
+                        'JAxwDvYb84m8MK55VP8J',
+                        'a67Q9CmHZa4Diy6mzheD',
+                        'MTysFoHqX0TkLIuVAcFD',
+                        '8T19cn4QOsl404LxIWiW',
+                        'rv45GBsQrPIjULGnuz5N',
+                        'yaNKhv6Je729vPhJNnBv',
+                        '96U64JHKksLxYBiTnNcz',
+                        'xIWwK8V5uV2sCLAnMVe8',
+                        'dg4fjasiWT6WYQAzkd1p',
+                        'dcOOyxa30MiwoTd6K7FI',
+                        'uEWpICNghd9MNZlQIvZ8',
+                        'g9D2PoJLPkjRdnZetzcp'
+                    ][substr($_GET["pay_id"],-1,1)];}else{echo '充值失败';}?></dd>
                 <dt>金额</dt>
                 <dd><?php echo (float)$_GET["money"] ?></dd>
                 <dt>商户订单：</dt>

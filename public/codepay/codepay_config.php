@@ -111,7 +111,7 @@ $codepay_config['notify_url'] = $codepay_config['path'] . '/notify.php'; //自�
  * 以下为控制是否开启调试模式 会使用测试数据进行充值示范。需要访问install.php安装数据后才生效
  */
 define('ROOT_PATH', dirname(__FILE__)); //这是程序目录常量
-define('DEBUG', true);  //调试模式启用
+define('DEBUG', false);  //调试模式启用
 define('LOG_PATH', ROOT_PATH . '/log.txt');  //日志文件路径 建议写入到非web目录 比如c:/log.txt 因为WEB目录任何人可访问
 define('DB_PREFIX', 'codepay');  //测试数据表前缀 主要是订单记录表前缀 删除该行将停用测试数据
 
