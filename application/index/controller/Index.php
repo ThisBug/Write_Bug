@@ -62,6 +62,19 @@ class Index extends Controller
     }
 
     /**
+     * 接收用户付款成功数据
+     */
+    public function callback()
+    {
+        trace(json_encode($_REQUEST),'info');
+        $file = realpath( '/home/wwwlogs/' ).'/apilogs/other/'.date('Y-m-d').'.log';
+        if (!is_dir(dirname($file))) {
+            mkdir(dirname($file),0777, true);
+        }
+        file_put_contents($file,'['.date('Y-m-d H:i:s').'][post:'.json_encode($_REQUEST).'][return:'.json_encode($_POST).']'.PHP_EOL, FILE_APPEND);
+    }
+
+    /**
      * 远程请求函数
      * @param string $url    请求网址
      * @param string $post   post参数
