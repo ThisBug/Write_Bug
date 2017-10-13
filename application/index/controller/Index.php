@@ -43,7 +43,7 @@ class Index extends Controller
         $db_order->save();
         $post = [
             'user' => $db_order->id,
-            'price'=> 88,
+            'price'=> 0.01,
             'remarks' => $_POST['mobile'],
             'type' => intval($_POST['pay']),
         ];
