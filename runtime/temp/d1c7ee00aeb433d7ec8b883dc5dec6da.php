@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:83:"D:\Program Files\HaoWeb\Write_Bug\public/../application/index\view\index\index.html";i:1507883281;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:83:"D:\Program Files\HaoWeb\Write_Bug\public/../application/index\view\index\index.html";i:1507883789;}*/ ?>
 <?php
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("./codepay/codepay_config.php"); //导入配置文件
@@ -44,16 +44,12 @@ require_once("./codepay/lib/codepay_md5.function.php"); //导入MD5函数库
 				<div><span class="shop-name">商品名称  :</span><input type="text" Name="shop_name" required="" readonly value="<?php echo $shop_name; ?>"/></div>
 				<div><span class="shop-name">商品价格  :</span><input type="text" Name="money" required="" readonly value="<?php echo $money; ?>元人民币(付款页面随机立减)"/></div>
 				<div><span class="shop-name">已售出  :</span><input type="text" Name="num" required="" readonly value="<?php echo $num; ?>件"/></div>
-				<div><span class="shop-name">联系方式  :</span><input type="text" Name="mobile" id="mobile" required="" placeholder="唯一凭证(请填写手机号)" value=""/></div>
+				<div><span class="shop-name">联系方式  :</span><input type="text" Name="mobile" id="mobile" required="" placeholder="唯一凭证(推荐填写手机号)" value=""/></div>
 				<div><span class="shop-name">支付方式  :</span>
 					<div class="social-icons w3layouts agileits">
 						<ul style="padding-bottom: 1rem;">
-							<li class="zhifubao w3ls" id="zhifubao"><a href="#">
-								<input type="radio" id="zhifubao_checked" name="pay" checked value="1"><span class="icons w3layouts"></span>
-								<span class="text w3layouts agileits"></span></a>
-							</li>
 							<li class="weixin w3ls" id="weixin"><a href="#">
-								<input type="radio" id="weixin_checked" name="pay" value="3"><span class="icons w3layouts"></span>
+								<input type="radio" id="weixin_checked" name="pay" checked value="3"><span class="icons w3layouts"></span>
 								<span class="text w3layouts agileits"></span></a>
 							</li>
 							<div class="clear"> </div>

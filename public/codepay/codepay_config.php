@@ -123,7 +123,7 @@ define('DB_PREFIX', 'codepay');  //测试数据表前缀 主要是订单记录�
 define('DB_HOST', 'localhost'); //数据库服务器地址
 define('DB_USER', 'root');  //数据库用户名
 define('DB_PWD', 'root');//数据库密码
-define('DB_NAME', 'codepay');  //数据库名称
+define('DB_NAME', 'faka');  //数据库名称
 define('DB_PORT', '3306');  //数据库端口
 
 define('DB_AUTOCOMMIT', false);  //默认false使用事物回滚 不自动提交只对InnoDB有效。
